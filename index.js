@@ -1,18 +1,13 @@
-function permute(nums) {
+function rightSideView(root) {
+  if (!root) return [];
   const result = [];
-  backtrack([]);
+  let level = 0;
+  const traverse = (node, level) => {
+    if (!node) return;
+    if (result[level] === undefined) result[level] = node.val;
+    traverse(node.right, level + 1);
+    traverse(node.left, level + 1);
+  };
+  traverse(root, level);
   return result;
-  function backtrack(permutation) {
-    if (permutation.length === nums.length) {
-      result.push([...permutation]);
-      return;
-    }
-    for (const num of nums) {
-      if (!permutation.includes(num)) {
-        permutation.push(num);
-        backtrack(permutation);
-        permutation.pop();
-      }
-    }
-  }
 }

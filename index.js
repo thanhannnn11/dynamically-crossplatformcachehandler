@@ -1,15 +1,26 @@
-function removeNthFromEnd(head, n) {
-  const dummy = new ListNode(0);
-  dummy.next = head;
-  let first = dummy;
-  let second = dummy;
-  for (let i = 1; i <= n + 1; i++) {
-    first = first.next;
+function isValidSudoku(board) {
+  for (let i = 0; i < 9; i++) {
+    const row = new Set();
+    const col = new Set();
+    const box = new Set();
+    for (let j = 0; j < 9; j++) {
+      const rowVal = board[i][j];
+      const colVal = board[j][i];
+      const boxVal =
+        board[3 * Math.floor(i / 3) + Math.floor(j / 3)][3 * (i % 3) + (j % 3)];
+      if (rowVal !== ".") {
+        if (row.has(rowVal)) return false;
+        row.add(rowVal);
+      }
+      if (colVal !== ".") {
+        if (col.has(colVal)) return false;
+        col.add(colVal);
+      }
+      if (boxVal !== ".") {
+        if (box.has(boxVal)) return false;
+        box.add(boxVal);
+      }
+    }
   }
-  while (first !== null) {
-    first = first.next;
-    second = second.next;
-  }
-  second.next = second.next.next;
-  return dummy.next;
+  return true;
 }
